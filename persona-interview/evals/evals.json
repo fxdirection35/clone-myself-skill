@@ -61,6 +61,22 @@
         "生成的 SKILL.md 中包含详细的「待补充信息」章节",
         "待补充信息章节覆盖了至少3个缺失类别（如行业、岗位、技能等）"
       ]
+    },
+    {
+      "id": 5,
+      "prompt": "我想更新小明的产品经理 persona skill。小明最近学了 SQL 和 Python，开始用 Tableau 做数据分析。沟通风格也从偏正式变得比较随意了，别的保持不变。",
+      "expected_output": "The skill detects 'update' intent, asks which skill to update (or extracts '小明' from the prompt), searches for the skill directory, doesn't find it, says '没找到这个 skill', asks if user wants to create one via interview. In a non-interactive context, it extracts available info and generates a new skill with the updated details (SQL, Python, Tableau, casual communication style).",
+      "files": [],
+      "expectations": [
+        "系统检测到了'更新'意图并进入 Update Mode",
+        "系统询问了要更新哪个 skill（或从用户输入中提取了 skill 名称）",
+        "系统找不到指定 skill 时提示了'没找到'并询问是否创建新 skill",
+        "生成的 skill 包含新的技能（SQL、Python、Tableau）",
+        "生成的 skill 反映了沟通风格的变化（偏随意）",
+        "生成的 SKILL.md 包含有效的 YAML frontmatter",
+        "生成的 skill 包含了基本信息（产品经理、小明）",
+        "技能信息标注了是用户提供还是推断的"
+      ]
     }
   ]
 }

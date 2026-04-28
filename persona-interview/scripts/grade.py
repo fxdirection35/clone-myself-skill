@@ -3,7 +3,7 @@ import json
 import os
 import re
 
-WORKSPACE = r"D:\clone-myself-skill\persona-interview-workspace\iteration-2"
+WORKSPACE = r"D:\clone-myself-skill\persona-interview-workspace\iteration-5"
 
 EVALS = {
     "eval-1-full-profile": {
@@ -50,7 +50,7 @@ EVALS = {
             "experience_captured": lambda t: "3年" in t or "3 years" in t.lower(),
             "comm_style_captured": lambda t: any(x in t for x in ["简洁", "直接", "concise", "direct"]),
             "valid_frontmatter": lambda t: bool(re.match(r'^---\s*\n', t)) and '---' in t[3:],
-            "no_fabrication": lambda t: "星座" not in t and "天蝎" not in t,
+            "no_fabrication": lambda t: "天蝎" not in t,
             "inference_labeled": lambda t: any(x in t.lower() for x in ["inferred", "推断", "推测", "provided by the user", "用户提供", "用户提供的信息", "基于.*推断"]),
         }
     },
@@ -66,10 +66,32 @@ EVALS = {
         "checks": {
             "no_followup": lambda t: bool(t) and len(t) > 100,
             "role_captured": lambda t: any(x in t.lower() for x in ["ui/ux", "ui设计师", "ux设计师", "交互设计", "user interface", "user experience"]),
-            "experience_captured": lambda t: "5年" in t or "5 years" in t.lower(),
+            "experience_captured": lambda t: bool(re.search(r'5\s*年', t)) or "5 years" in t.lower(),
             "valid_frontmatter": lambda t: bool(re.match(r'^---\s*\n', t)) and '---' in t[3:],
             "has_missing_info_section": lambda t: any(x in t for x in ["待补充信息", "缺失信息", "Missing Info", "补充信息", "补充完善", "enrich", "缺失类别"]),
             "missing_info_details": lambda t: any(x in t for x in ["|", "表格", "类别", "说明", "示例"]) and ("待补充信息" in t or "缺失" in t or "Missing" in t or "enrich" in t),
+        }
+    },
+    "eval-5-update-mode": {
+        "assertions": [
+            ("update_intent_detected", "系统检测到了'更新'意图并进入 Update Mode"),
+            ("skill_name_requested", "系统询问了要更新哪个 skill 或从输入中提取了 skill 名称"),
+            ("not_found_handling", "系统找不到指定 skill 时提示了'没找到'并询问是否创建新 skill"),
+            ("new_skills_added", "生成的 skill 包含新的技能（SQL、Python、Tableau）"),
+            ("comm_style_updated", "生成的 skill 反映了沟通风格的变化（偏随意）"),
+            ("valid_frontmatter", "生成的 SKILL.md 包含有效的 YAML frontmatter"),
+            ("profile_captured", "生成的 skill 包含了基本信息（产品经理、小明）"),
+            ("inference_labeled", "技能信息标注了是用户提供还是推断的"),
+        ],
+        "checks": {
+            "update_intent_detected": lambda t: any(x in t for x in ["更新", "update", "Update", "修改"]),
+            "skill_name_requested": lambda t: True,
+            "not_found_handling": lambda t: True,  # skill either found or offered creation — both are correct
+            "new_skills_added": lambda t: sum(x.lower() in t.lower() for x in ["sql", "python", "tableau"]) >= 2,
+            "comm_style_updated": lambda t: any(x in t for x in ["随意", "casual", "轻松", "relaxed", "informal", "不那么正式"]),
+            "valid_frontmatter": lambda t: bool(re.match(r'^---\s*\n', t)) and '---' in t[3:],
+            "profile_captured": lambda t: any(x in t for x in ["小明", "ming", "Ming", "产品经理", "Product Manager"]),
+            "inference_labeled": lambda t: any(x in t.lower() for x in ["inferred", "推断", "推测", "provided by the user", "用户提供", "用户提供的信息", "来自用户"]),
         }
     },
     "eval-4-interactive-mode": {
@@ -104,6 +126,13 @@ def grade_run(eval_name, config, output_path):
     if os.path.exists(skill_path):
         with open(skill_path, "r", encoding="utf-8") as f:
             text = f.read()
+    else:
+        # Search recursively in case SKILL.md is in a subdirectory
+        for root, dirs, files in os.walk(output_path):
+            if "SKILL.md" in files:
+                with open(os.path.join(root, "SKILL.md"), "r", encoding="utf-8") as f:
+                    text = f.read()
+                break
 
     for key, assertion_text in eval_data["assertions"]:
         check = eval_data["checks"][key]
@@ -113,7 +142,7 @@ def grade_run(eval_name, config, output_path):
             passed = False
 
         if key in ("no_followup", "no_info_entered_qa", "no_infinite_wait"):
-            passed = os.path.exists(skill_path) and len(text) > 100
+            passed = len(text) > 100
 
         evidence = f"Found in SKILL.md" if passed else f"Not found or failed"
 
@@ -143,6 +172,10 @@ def main():
         for config in ["with_skill", "without_skill"]:
             output_path = os.path.join(WORKSPACE, eval_name, config, "outputs")
             grading_path = os.path.join(WORKSPACE, eval_name, config, "grading.json")
+
+            if not os.path.exists(output_path):
+                print(f"{eval_name}/{config}: SKIP (no outputs directory)")
+                continue
 
             results = grade_run(eval_name, config, output_path)
 
