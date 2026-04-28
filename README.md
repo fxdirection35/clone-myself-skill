@@ -12,14 +12,11 @@ You can stop the interview anytime by saying **"结束"**, **"停止"**, or **"s
 
 ## Installation
 
-```bash
-/plugin persona-interview
-```
-
-Or install the `.skill` file:
+After cloning the repo, use `/plugin` with the path to the `persona-interview` directory:
 
 ```bash
-/plugin persona-interview.skill
+git clone https://github.com/fxdirection35/clone-myself-skill.git
+/plugin clone-myself-skill/persona-interview
 ```
 
 ## Features
