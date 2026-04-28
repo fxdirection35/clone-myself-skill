@@ -1,10 +1,12 @@
 {
   "name": "clone-myself-skill",
   "description": "Persona interview skill for building personalized AI personas",
-  "owner": "fxdirection35",
+  "owner": {
+    "name": "fxdirection35"
+  },
   "version": "1.0.0",
-  "plugins": {
-    "persona-skills": {
+  "plugins": [
+    {
       "name": "persona-skills",
       "description": "Interview users and generate personalized SKILL.md files that embody their professional persona",
       "source": "./",
@@ -13,5 +15,5 @@
         "./skills/persona-interview"
       ]
     }
-  }
+  ]
 }
