@@ -1,0 +1,66 @@
+{
+  "skill_name": "persona-interview",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "请采访我并生成一个skill。我是张明，天蝎座，性格偏INTJ。我在跨境电商行业做了6年，是一家出海电商公司的产品经理。核心技能是用户调研、数据分析、A/B测试和PRD撰写，常用工具包括Figma、Amplitude、Jira和Notion。工作流是周一早上定本周OKR，每天站会后做数据看板巡检，周三下午产品评审。决策风格偏数据驱动，但尊重团队共识。沟通风格比较直接，正式中带点幽默。风险管理上偏保守，新产品上线都会先做灰度测试。同事叫我ming，你可以叫我小明。",
+      "expected_output": "A generated persona skill in a subfolder under the current directory. The SKILL.md should capture all provided information with clear distinction between user-provided and inferred content.",
+      "files": [],
+      "expectations": [
+        "生成的 SKILL.md 包含用户姓名（张明/小明/ming）",
+        "生成的 SKILL.md 捕获了行业信息（跨境电商）",
+        "生成的 SKILL.md 捕获了岗位信息（产品经理）",
+        "生成的 SKILL.md 捕获了核心技能（用户调研、数据分析、A/B测试、PRD）",
+        "生成的 SKILL.md 捕获了工作习惯（OKR、站会、数据看板、灰度测试）",
+        "生成的 SKILL.md 捕获了决策风格（数据驱动，尊重共识）",
+        "生成的 SKILL.md 包含了沟通风格描述（直接、正式中带幽默）",
+        "生成的 SKILL.md 包含了至少 2 个示例场景",
+        "生成的 SKILL.md 包含有效的 YAML frontmatter（以 --- 开头和结尾）",
+        "生成的 SKILL.md 将用户提供的信息与推断的信息分开标注（用户提供/Provided by user vs 推断/Inferred）"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "帮我搞个技能吧。我是李华，后端开发，工作3年了。做金融系统的，Java和Go都用。主要搞微服务和分布式系统。嗯...沟通风格比较简洁吧。其他还没想好。",
+      "expected_output": "A generated persona skill capturing the user's role, tech stack, and communication style. Skill should be usable even with partial info, with inference clearly labeled.",
+      "files": [],
+      "expectations": [
+        "生成的 SKILL.md 包含用户姓名（李华）",
+        "生成的 SKILL.md 捕获了岗位信息（后端开发）",
+        "生成的 SKILL.md 捕获了技术栈（Java、Go、微服务、分布式系统）",
+        "生成的 SKILL.md 捕获了工作年限（3年）",
+        "生成的 SKILL.md 包含沟通风格描述（简洁）",
+        "生成的 SKILL.md 包含有效的 YAML frontmatter",
+        "对于用户未提供的信息，生成的 SKILL.md 不编造为事实，而是标为推断或留空",
+        "生成的 SKILL.md 将用户提供的信息与推断的信息分开标注"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "请采访我。我是设计师，做UI/UX的，5年经验。然后...嗯，就这些吧，stop。",
+      "expected_output": "A generated persona skill created after early termination. Should have a 'Missing Info' section suggesting what to add later.",
+      "files": [],
+      "expectations": [
+        "用户在说 stop 后没有继续追问，而是立即进入了生成阶段",
+        "生成的 SKILL.md 捕获了岗位信息（UI/UX设计师）",
+        "生成的 SKILL.md 捕获了工作年限（5年）",
+        "生成的 SKILL.md 包含有效的 YAML frontmatter",
+        "生成的 SKILL.md 中包含「待补充信息」或 'Missing Info' 等缺失信息章节",
+        "缺失信息章节中列出了至少2项可补充的具体类别和示例问题"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "帮我创建一个skill",
+      "expected_output": "The skill enters interactive mode and asks questions one at a time. Since no responses are possible in this context, it should extract what little info exists, note the missing categories comprehensively, and generate a skeleton skill with a detailed 'Missing Info' section.",
+      "files": [],
+      "expectations": [
+        "用户没有提供具体信息，skill 进入提问模式",
+        "在没有交互可能的情况下，没有无限等待而是生成了骨架 skill",
+        "生成的 SKILL.md 包含有效的 YAML frontmatter",
+        "生成的 SKILL.md 中包含详细的「待补充信息」章节",
+        "待补充信息章节覆盖了至少3个缺失类别（如行业、岗位、技能等）"
+      ]
+    }
+  ]
+}
