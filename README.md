@@ -12,13 +12,14 @@ You can stop the interview anytime by saying **"结束"**, **"停止"**, or **"s
 
 ## Installation
 
-### Direct install (from clone)
+### Global install (copy to Claude plugins)
 
 ```bash
 git clone https://github.com/fxdirection35/clone-myself-skill.git
-cd clone-myself-skill
-/plugin ./skills/persona-interview
+cp -r clone-myself-skill/skills/persona-interview ~/.claude/plugins/persona-interview
 ```
+
+After copying, restart Claude Code. The skill will be available globally.
 
 ### Marketplace install
 
