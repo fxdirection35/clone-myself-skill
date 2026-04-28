@@ -16,7 +16,8 @@ You can stop the interview anytime by saying **"结束"**, **"停止"**, or **"s
 
 ```bash
 git clone https://github.com/fxdirection35/clone-myself-skill.git
-/plugin clone-myself-skill/skills/persona-interview
+cd clone-myself-skill
+/plugin ./skills/persona-interview
 ```
 
 ### Marketplace install
