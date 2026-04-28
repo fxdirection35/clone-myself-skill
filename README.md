@@ -12,18 +12,21 @@ You can stop the interview anytime by saying **"结束"**, **"停止"**, or **"s
 
 ## Installation
 
-Clone the repo and install with `/plugin`:
+### Direct install (from clone)
 
 ```bash
 git clone https://github.com/fxdirection35/clone-myself-skill.git
-/plugin clone-myself-skill
+/plugin clone-myself-skill/skills/persona-interview
 ```
 
-Or install the packaged `.skill` file:
+### Marketplace install
 
 ```bash
-/plugin clone-myself-skill/persona-interview.skill
+/plugin marketplace add fxdirection35/clone-myself-skill
+/plugin install persona-skills
 ```
+
+The plugin group `persona-skills` contains the `persona-interview` skill.
 
 ## Features
 
@@ -95,13 +98,17 @@ User: "更新小明的 skill，技能加 SQL 和 Python"
 
 ```
 clone-myself-skill/
-├── SKILL.md              # The skill definition (install with /plugin)
-├── persona-interview.skill # Packaged skill for /plugin install
-├── evals/
-│   └── evals.json        # Test cases (5 evals)
-├── scripts/
-│   └── grade.py          # Evaluation grading script
-└── README.md
+├── .claude-plugin/
+│   └── marketplace.json     # Plugin marketplace manifest
+├── skills/
+│   └── persona-interview/
+│       ├── SKILL.md         # The skill definition
+│       ├── evals/
+│       │   └── evals.json   # Test cases (5 evals)
+│       └── scripts/
+│           └── grade.py     # Evaluation grading script
+├── README.md
+└── .gitignore
 ```
 
 Built with the [skill-creator](https://github.com/anthropics/claude-code/skills/skill-creator).

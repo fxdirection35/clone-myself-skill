@@ -1,6 +1,9 @@
 # Dev artifacts
 persona-interview-workspace/
 
+# Packaged skill (recreate when needed)
+*.skill
+
 # Python
 __pycache__/
 *.pyc
